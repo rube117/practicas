@@ -11,8 +11,8 @@ package modelo;
  */
 public class ValidarUsuario {
 
-    public static void validarNoUsuario(String u, String p) throws UsuarioNoValidoException {
-        if (!u.equals("ruben")&&!p.equals("16533851")) 
+    public static void autenticar(Usuario u) throws UsuarioNoValidoException {
+        if (!(u.getLogin().equals("ruben")&&u.getPassword().equals("16533851"))) 
             throw new UsuarioNoValidoException();
     }
 }

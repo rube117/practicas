@@ -37,8 +37,8 @@ public class AdministrarAplicacion extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtLogin = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         etiquetaError = new javax.swing.JLabel();
 
@@ -58,11 +58,11 @@ public class AdministrarAplicacion extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 222, 244));
         jLabel3.setText("Password:");
 
-        jTextField1.setBackground(new java.awt.Color(0, 23, 51));
-        jTextField1.setForeground(new java.awt.Color(0, 222, 244));
+        txtLogin.setBackground(new java.awt.Color(0, 23, 51));
+        txtLogin.setForeground(new java.awt.Color(0, 222, 244));
 
-        jPasswordField1.setBackground(new java.awt.Color(0, 23, 51));
-        jPasswordField1.setForeground(new java.awt.Color(0, 222, 244));
+        txtPassword.setBackground(new java.awt.Color(0, 23, 51));
+        txtPassword.setForeground(new java.awt.Color(0, 222, 244));
 
         jButton1.setBackground(new java.awt.Color(0, 23, 51));
         jButton1.setForeground(new java.awt.Color(0, 222, 244));
@@ -97,8 +97,8 @@ public class AdministrarAplicacion extends javax.swing.JFrame {
                                     .addComponent(jLabel3))
                                 .addGap(41, 41, 41)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField1)
-                                    .addComponent(jPasswordField1)
+                                    .addComponent(txtLogin)
+                                    .addComponent(txtPassword)
                                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))))))
                 .addContainerGap(107, Short.MAX_VALUE))
         );
@@ -110,11 +110,11 @@ public class AdministrarAplicacion extends javax.swing.JFrame {
                 .addGap(57, 57, 57)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addGap(27, 27, 27)
@@ -139,11 +139,11 @@ public class AdministrarAplicacion extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Botón de Ingreso
         try {
-            String usu = jTextField1.getText(), pass = jPasswordField1.getText();
-            ValidarUsuario.validarNoUsuario(usu, pass);
-            Usuario u = new Usuario();
-            u.setLogin(usu);
-            u.setPassword(pass);
+            Usuario u=new Usuario(txtLogin.getText(), txtPassword.getText());
+            ValidarUsuario.autenticar(u);
+            FormularioPregunta formulario=new FormularioPregunta();
+            formulario.setVisible(true);
+            dispose();
 
         } catch (UsuarioNoValidoException e) {
             etiquetaError.setVisible(true);
@@ -193,7 +193,7 @@ public class AdministrarAplicacion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtLogin;
+    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }
