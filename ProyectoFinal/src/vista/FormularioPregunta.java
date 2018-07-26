@@ -5,6 +5,14 @@
  */
 package vista;
 
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import modelo.Opcion;
+import modelo.PersistenciaPreguntas;
+import modelo.Pregunta;
+
 /**
  *
  * @author T-101
@@ -17,6 +25,7 @@ public class FormularioPregunta extends javax.swing.JFrame {
     public FormularioPregunta() {
         initComponents();
         setLocationRelativeTo(this);
+        confirmarGuardado.setVisible(false);
     }
 
     /**
@@ -34,19 +43,23 @@ public class FormularioPregunta extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        campoTitulo = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        campoOp2 = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
+        campoOp3 = new javax.swing.JTextArea();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea4 = new javax.swing.JTextArea();
+        campoOp4 = new javax.swing.JTextArea();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTextArea5 = new javax.swing.JTextArea();
+        campoOp1 = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        confirmarGuardado = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
 
@@ -67,28 +80,38 @@ public class FormularioPregunta extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 222, 244));
         jLabel2.setText("Título de la pregunta");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        campoTitulo.setBackground(new java.awt.Color(0, 23, 51));
+        campoTitulo.setColumns(20);
+        campoTitulo.setForeground(new java.awt.Color(0, 222, 244));
+        campoTitulo.setRows(5);
+        jScrollPane1.setViewportView(campoTitulo);
 
         jLabel3.setForeground(new java.awt.Color(0, 222, 244));
         jLabel3.setText("Opción correcta");
 
-        jTextArea2.setColumns(10);
-        jTextArea2.setRows(2);
-        jScrollPane2.setViewportView(jTextArea2);
+        campoOp2.setBackground(new java.awt.Color(0, 23, 51));
+        campoOp2.setColumns(10);
+        campoOp2.setForeground(new java.awt.Color(0, 222, 244));
+        campoOp2.setRows(2);
+        jScrollPane2.setViewportView(campoOp2);
 
-        jTextArea3.setColumns(10);
-        jTextArea3.setRows(2);
-        jScrollPane3.setViewportView(jTextArea3);
+        campoOp3.setBackground(new java.awt.Color(0, 23, 51));
+        campoOp3.setColumns(10);
+        campoOp3.setForeground(new java.awt.Color(0, 222, 244));
+        campoOp3.setRows(2);
+        jScrollPane3.setViewportView(campoOp3);
 
-        jTextArea4.setColumns(10);
-        jTextArea4.setRows(2);
-        jScrollPane4.setViewportView(jTextArea4);
+        campoOp4.setBackground(new java.awt.Color(0, 23, 51));
+        campoOp4.setColumns(10);
+        campoOp4.setForeground(new java.awt.Color(0, 222, 244));
+        campoOp4.setRows(2);
+        jScrollPane4.setViewportView(campoOp4);
 
-        jTextArea5.setColumns(10);
-        jTextArea5.setRows(2);
-        jScrollPane5.setViewportView(jTextArea5);
+        campoOp1.setBackground(new java.awt.Color(0, 23, 51));
+        campoOp1.setColumns(10);
+        campoOp1.setForeground(new java.awt.Color(0, 222, 244));
+        campoOp1.setRows(2);
+        jScrollPane5.setViewportView(campoOp1);
 
         jLabel4.setForeground(new java.awt.Color(0, 222, 244));
         jLabel4.setText("Opciones incorrecta");
@@ -96,6 +119,15 @@ public class FormularioPregunta extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(0, 23, 51));
         jButton1.setForeground(new java.awt.Color(0, 222, 244));
         jButton1.setText("Guardar Pregunta");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        confirmarGuardado.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        confirmarGuardado.setForeground(new java.awt.Color(0, 222, 244));
+        confirmarGuardado.setText("¡Se ha guardado correctamente!");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -117,6 +149,7 @@ public class FormularioPregunta extends javax.swing.JFrame {
                         .addContainerGap(153, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(confirmarGuardado)
                             .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -141,9 +174,11 @@ public class FormularioPregunta extends javax.swing.JFrame {
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
                     .addComponent(jScrollPane3)
                     .addComponent(jScrollPane2))
-                .addGap(0, 45, Short.MAX_VALUE)
+                .addGap(0, 53, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(71, 71, 71))
+                .addGap(26, 26, 26)
+                .addComponent(confirmarGuardado)
+                .addGap(30, 30, 30))
         );
 
         jTabbedPane1.addTab("Nueva Pregunta", jPanel2);
@@ -151,15 +186,49 @@ public class FormularioPregunta extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(0, 0, 51));
         jPanel3.setToolTipText("");
 
+        jTable1.setBackground(new java.awt.Color(0, 23, 51));
+        jTable1.setForeground(new java.awt.Color(0, 222, 244));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Título de pregunta", "Opción 1", "Opción 2", "Opción 3", "Opción 4"
+            }
+        ));
+        jScrollPane6.setViewportView(jTable1);
+
+        jButton2.setBackground(new java.awt.Color(0, 23, 51));
+        jButton2.setForeground(new java.awt.Color(0, 222, 244));
+        jButton2.setText("Mostrar Preguntas");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 732, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jButton2))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(161, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 569, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jButton2)
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(181, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Buscar Preguntas", jPanel3);
@@ -231,6 +300,71 @@ public class FormularioPregunta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            // Guardar Pregunta
+            String titulo = campoTitulo.getText();
+            String op1 = campoOp1.getText();
+            String op2 = campoOp2.getText();
+            String op3 = campoOp3.getText();
+            String op4 = campoOp4.getText();
+
+            // Construimos cada opción
+            Opcion o1 = new Opcion(op1, true);
+            Opcion o2 = new Opcion(op2, false);
+            Opcion o3 = new Opcion(op3, false);
+            Opcion o4 = new Opcion(op4, false);
+            ArrayList opciones=new ArrayList<>();
+            opciones.add(o1);
+            opciones.add(o2);
+            opciones.add(o3);
+            opciones.add(o4);
+
+            // Las agregamos a una ArrayList y a la pregunta
+            Pregunta p = new Pregunta(titulo, opciones);
+
+            // Ahora si guardamos la pregunta
+            PersistenciaPreguntas.guardar(p);
+            campoOp1.setText(null);
+            campoOp2.setText(null);
+            campoOp3.setText(null);
+            campoOp4.setText(null);
+            campoTitulo.setText(null);
+            confirmarGuardado.setVisible(true);
+
+        } catch (Exception ex) {
+            JOptionPane.showConfirmDialog(this, ex.getMessage());
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // Mostrar Pregunta
+        try {
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object [PersistenciaPreguntas.leer().size()][4],
+                    new String [] {
+                        "Título de pregunta", "Opción 1", "Opción 2", "Opción 3", "Opción 4"
+                    }
+            ));
+            int i=0;
+            System.out.println("Tamano "+PersistenciaPreguntas.leer().size());
+            
+            for(Pregunta p: PersistenciaPreguntas.leer())
+            {
+                jTable1.setValueAt(p.getTitulo(), i, 0);
+                jTable1.setValueAt(p.getOpciones().get(0).getTitulo(), i, 1);
+                jTable1.setValueAt(p.getOpciones().get(1).getTitulo(), i, 2);
+                jTable1.setValueAt(p.getOpciones().get(2).getTitulo(), i, 3);
+                jTable1.setValueAt(p.getOpciones().get(3).getTitulo(), i, 4);
+                i++;
+              
+            }} catch (Exception ex) {
+            JOptionPane.showConfirmDialog(this, ex.getMessage());
+        }
+       
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -267,7 +401,14 @@ public class FormularioPregunta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea campoOp1;
+    private javax.swing.JTextArea campoOp2;
+    private javax.swing.JTextArea campoOp3;
+    private javax.swing.JTextArea campoOp4;
+    private javax.swing.JTextArea campoTitulo;
+    private javax.swing.JLabel confirmarGuardado;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -282,11 +423,8 @@ public class FormularioPregunta extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
-    private javax.swing.JTextArea jTextArea4;
-    private javax.swing.JTextArea jTextArea5;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
