@@ -23,7 +23,7 @@ public class ProbarOrdenamiento {
             Random x=new Random();
             int valor=x.nextInt(4);
             enteros.add(valor);
-        }
+            }
         
         // Este For necesita cambios
         for(Integer i:enteros)

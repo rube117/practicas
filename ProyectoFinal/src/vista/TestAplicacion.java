@@ -5,18 +5,72 @@
  */
 package vista;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import modelo.Opcion;
+import modelo.PersistenciaPreguntas;
+import modelo.Pregunta;
+
 /**
  *
  * @author T-101
  */
 public class TestAplicacion extends javax.swing.JFrame {
-
+int numero=0,npreg=0,cronometro=0;
     /**
      * Creates new form TestAplicacion
      */
     public TestAplicacion() {
         initComponents();
         setLocationRelativeTo(this); // Este método centra la ventana
+        setSize(400,500);
+        mostrarPregunta(numero++);
+        // Creando el tiempo
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    cronometro -= 1;
+                    etiquetaTiempo.setText("Tiempo: " + cronometro);
+                    try {
+                        Thread.sleep(1000);
+                        if(cronometro==0)mostrarPregunta(numero++);
+                    } catch (InterruptedException ex) {
+
+                    }
+                }
+            }
+        });
+        t1.start();
+    }
+    public void mostrarPregunta(int numero)
+    {
+        cronometro = 31;
+        try
+        {
+            // Primero sacamos la pregunta de l número dado
+            ArrayList<Pregunta> preguntas=PersistenciaPreguntas.leer();
+            Pregunta p=preguntas.get(numero);
+            // Ajustamos valores
+            // Preimero va el título
+            etiquetaPregunta.setText(p.getTitulo());
+            // Ahora las opciones
+            ArrayList<Opcion> opciones=p.getOpciones();
+            // Aplicamos el algoritmo
+            opciones=PersistenciaPreguntas.opcionesAleatorias(opciones);
+            rb1.setText(opciones.get(0).getTitulo());
+            rb2.setText(opciones.get(1).getTitulo());
+            rb2.setText(opciones.get(2).getTitulo());
+            rb2.setText(opciones.get(3).getTitulo());
+            npreg++;
+        }catch(Exception ex)
+        {
+            
+        }
+        
+        
     }
 
     /**
@@ -28,32 +82,61 @@ public class TestAplicacion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        etiquetaTiempo = new javax.swing.JLabel();
+        etiquetaPregunta = new javax.swing.JLabel();
+        rb1 = new javax.swing.JRadioButton();
+        rb2 = new javax.swing.JRadioButton();
+        rb3 = new javax.swing.JRadioButton();
+        rb4 = new javax.swing.JRadioButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(22, 193, 22));
+        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.Y_AXIS));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Contestar Test");
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setText("Ratchet y Clank (PS2-PS3)");
+        jPanel1.add(jLabel2);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(148, 148, 148)
-                .addComponent(jLabel1)
-                .addContainerGap(149, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(jLabel1)
-                .addContainerGap(238, Short.MAX_VALUE))
-        );
+        etiquetaTiempo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        etiquetaTiempo.setText("Tiempo:");
+        jPanel1.add(etiquetaTiempo);
+
+        etiquetaPregunta.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        etiquetaPregunta.setText("Pregunta");
+        jPanel1.add(etiquetaPregunta);
+
+        rb1.setBackground(new java.awt.Color(22, 193, 22));
+        buttonGroup1.add(rb1);
+        rb1.setText("jRadioButton1");
+        jPanel1.add(rb1);
+
+        rb2.setBackground(new java.awt.Color(22, 193, 22));
+        buttonGroup1.add(rb2);
+        rb2.setText("jRadioButton2");
+        jPanel1.add(rb2);
+
+        rb3.setBackground(new java.awt.Color(22, 193, 22));
+        buttonGroup1.add(rb3);
+        rb3.setText("jRadioButton3");
+        jPanel1.add(rb3);
+
+        rb4.setBackground(new java.awt.Color(22, 193, 22));
+        buttonGroup1.add(rb4);
+        rb4.setText("jRadioButton4");
+        jPanel1.add(rb4);
+
+        jButton1.setText("Siguiente pregunta >>");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -68,6 +151,11 @@ public class TestAplicacion extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // Siguiente pregunta >>
+        mostrarPregunta(numero);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -105,7 +193,15 @@ public class TestAplicacion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel etiquetaPregunta;
+    private javax.swing.JLabel etiquetaTiempo;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JRadioButton rb1;
+    private javax.swing.JRadioButton rb2;
+    private javax.swing.JRadioButton rb3;
+    private javax.swing.JRadioButton rb4;
     // End of variables declaration//GEN-END:variables
 }
