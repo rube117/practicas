@@ -6,7 +6,7 @@
 package modelo;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  *
@@ -44,4 +44,21 @@ public class PersistenciaPreguntas {
         return preguntas;
     }
 
+    public static ArrayList<Opcion>
+            opcionesAleatorias(ArrayList<Opcion> opciones) {
+
+        ArrayList<Opcion> opcionesAleatorias = new ArrayList<>();
+
+        Set<Integer> enteros = new LinkedHashSet<>();
+
+        while (enteros.size() < 4) {
+            Random r = new Random();
+            int valor = r.nextInt(4);
+            enteros.add(valor);
+        }
+        for (Integer i : enteros) {
+            opcionesAleatorias.add(opciones.get(i));
+        }
+        return opcionesAleatorias;
+    }
 }

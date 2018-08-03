@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JRadioButton;
 import modelo.Opcion;
 import modelo.PersistenciaPreguntas;
 import modelo.Pregunta;
@@ -18,14 +19,17 @@ import modelo.Pregunta;
  * @author T-101
  */
 public class TestAplicacion extends javax.swing.JFrame {
-int numero=0,npreg=0,cronometro=0;
+
+    public static int numero = 0, npreg = 0, cronometro = 0, i = 0, click = 0;
+    short aux = 0;
+
     /**
      * Creates new form TestAplicacion
      */
     public TestAplicacion() {
         initComponents();
         setLocationRelativeTo(this); // Este método centra la ventana
-        setSize(400,500);
+        setSize(400, 500);
         mostrarPregunta(numero++);
         // Creando el tiempo
         Thread t1 = new Thread(new Runnable() {
@@ -36,7 +40,9 @@ int numero=0,npreg=0,cronometro=0;
                     etiquetaTiempo.setText("Tiempo: " + cronometro);
                     try {
                         Thread.sleep(1000);
-                        if(cronometro==0)mostrarPregunta(numero++);
+                        if (cronometro == 0) {
+                            mostrarPregunta(numero++);
+                        }
                     } catch (InterruptedException ex) {
 
                     }
@@ -45,32 +51,50 @@ int numero=0,npreg=0,cronometro=0;
         });
         t1.start();
     }
-    public void mostrarPregunta(int numero)
-    {
+public String checarSeleccionada(){
+ 
+ String rText=rb1.getText();
+    JRadioButton ra1=(JRadioButton) buttonGroup1.getSelection().getSelectedObjects()[0];
+    System.out.println("rb1 "+ra1.getText());
+ return null;
+}
+    public void mostrarPregunta(int numero) {
         cronometro = 31;
-        try
-        {
+        try {
             // Primero sacamos la pregunta de l número dado
-            ArrayList<Pregunta> preguntas=PersistenciaPreguntas.leer();
-            Pregunta p=preguntas.get(numero);
+            if (aux == 0) {
+                for (Pregunta p : PersistenciaPreguntas.leer()) {
+                    i++;
+                }
+            }
+            aux++;
+
+            ArrayList<Pregunta> preguntas = PersistenciaPreguntas.leer();
+            Pregunta p = preguntas.get(numero);
+
             // Ajustamos valores
             // Preimero va el título
-            etiquetaPregunta.setText(p.getTitulo());
+            npreg++; // Variable clave
+            etiquetaPregunta.setText(npreg + ".- " + p.getTitulo() + " " + npreg + "/" + i);
             // Ahora las opciones
-            ArrayList<Opcion> opciones=p.getOpciones();
+            ArrayList<Opcion> opciones = p.getOpciones();
             // Aplicamos el algoritmo
-            opciones=PersistenciaPreguntas.opcionesAleatorias(opciones);
+            opciones = PersistenciaPreguntas.opcionesAleatorias(opciones);
             rb1.setText(opciones.get(0).getTitulo());
             rb2.setText(opciones.get(1).getTitulo());
-            rb2.setText(opciones.get(2).getTitulo());
-            rb2.setText(opciones.get(3).getTitulo());
-            npreg++;
-        }catch(Exception ex)
-        {
-            
+            rb3.setText(opciones.get(2).getTitulo());
+            rb4.setText(opciones.get(3).getTitulo());
+
+        } catch (Exception ex) {
+
         }
-        
-        
+
+    }
+
+    public void Resultados() {
+        Resultados resultado = new Resultados();
+        resultado.setVisible(true);
+        dispose();
     }
 
     /**
@@ -111,22 +135,18 @@ int numero=0,npreg=0,cronometro=0;
         jPanel1.add(etiquetaPregunta);
 
         rb1.setBackground(new java.awt.Color(22, 193, 22));
-        buttonGroup1.add(rb1);
         rb1.setText("jRadioButton1");
         jPanel1.add(rb1);
 
         rb2.setBackground(new java.awt.Color(22, 193, 22));
-        buttonGroup1.add(rb2);
         rb2.setText("jRadioButton2");
         jPanel1.add(rb2);
 
         rb3.setBackground(new java.awt.Color(22, 193, 22));
-        buttonGroup1.add(rb3);
         rb3.setText("jRadioButton3");
         jPanel1.add(rb3);
 
         rb4.setBackground(new java.awt.Color(22, 193, 22));
-        buttonGroup1.add(rb4);
         rb4.setText("jRadioButton4");
         jPanel1.add(rb4);
 
@@ -142,11 +162,17 @@ int numero=0,npreg=0,cronometro=0;
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(101, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         pack();
@@ -154,7 +180,13 @@ int numero=0,npreg=0,cronometro=0;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Siguiente pregunta >>
-        mostrarPregunta(numero);
+        
+        System.out.println("Seleccionada es "+checarSeleccionada());
+     /*   click++;
+        mostrarPregunta(numero++);
+        if (click == i) {
+            Resultados();
+        }*/
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -205,3 +237,5 @@ int numero=0,npreg=0,cronometro=0;
     private javax.swing.JRadioButton rb4;
     // End of variables declaration//GEN-END:variables
 }
+
+

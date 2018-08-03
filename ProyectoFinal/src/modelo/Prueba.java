@@ -18,13 +18,19 @@ public class Prueba {
     public static void main(String[] args) {
         try {
             ArrayList<Opcion> opciones = PersistenciaPreguntas.leer().get(0).getOpciones();
+
             for (Opcion o : opciones) {
                 System.out.println(o.getTitulo());
             }
-            System.out.println("_____________");
-            PersistenciaPreguntas.opcionesAleatorias(opciones);
+            System.out.println("____________________");
+            opciones = PersistenciaPreguntas.opcionesAleatorias(opciones);
+            for (Opcion o : opciones) {
+                System.out.println(o.getTitulo());
+            }
+
         } catch (Exception ex) {
-            Logger.getLogger(Prueba.class.getName()).log(Level.SEVERE, null, ex);
+
         }
+
     }
 }
